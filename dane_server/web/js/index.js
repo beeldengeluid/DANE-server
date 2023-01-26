@@ -567,7 +567,7 @@ Vue.component('confirm', {
 });
 
 var loc = window.location;
-var baseUrl = loc.protocol + "//" + loc.hostname + (loc.port? ":"+loc.port : "") + "/"
+var baseUrl = "https://" + loc.hostname + (loc.port? ":"+loc.port : "") + "/"
 
 var Config = {
   API: new URL('/DANE/', baseUrl).href
