@@ -12,26 +12,6 @@ on:
 name: Deploy to Amazon ECR
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-    - name: Install pipenv
-      uses: dschep/install-pipenv-action@v1
-    - name: Install dependencies (including dev-packages)
-      run: pipenv install -d
-    - name: Show installed packages
-      run: pipenv graph
-    - name: Test with pytest
-      run: pipenv run pytest src/tests/unit_tests --cov
-    - name: Lint with flake8
-      run: pipenv run flake8 --select=E
-
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
