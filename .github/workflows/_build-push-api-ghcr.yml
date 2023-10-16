@@ -1,15 +1,7 @@
-on:
-  push:
-    branches:
-      - "main"
-      - "master"
-    paths-ignore:
-      - ./*.yml
-      - README.md
-      - LICENSE
-      - codemeta.json
+name: Deploy dane-server-api to github container registry
 
-name: Deploy to github container registry
+on:
+  workflow_call:
 
 env:
   REGISTRY_FQDN: ghcr.io
@@ -27,10 +19,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to the Container registry
-        uses: docker/login-action@v2.1.0
+        uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY_FQDN }}
           username: ${{ env.REGISTRY_USERNAME }}
@@ -38,12 +30,12 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v4.1.1
+        uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY_FQDN }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3.2.0
+        uses: docker/build-push-action@v5
         with:
           file: ${{ env.IMAGE_FILE }}
           labels: ${{ steps.meta.outputs.labels }}

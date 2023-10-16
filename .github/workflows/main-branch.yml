@@ -1,0 +1,25 @@
+name: main branch - test; deploy (ecr, tst, acc, aws)
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - ./*.yml
+      - README.md
+      - LICENSE
+      - codemeta.json
+
+jobs:
+  test:
+    uses: ./.github/workflows/_test.yml
+
+  build-and-push-api:
+    uses: ./.github/workflows/_build-push-api-ghcr.yml
+    secrets: inherit
+    needs: [test]
+
+  build-and-push-ts:
+    uses: ./.github/workflows/_build-push-ts-ghcr.yml
+    secrets: inherit
+    needs: [test]
