@@ -26,6 +26,7 @@ class RabbitMQPublisher(RabbitMQHandler):
         super().__init__(config)
 
     def publish(self, routing_key, task, document, retry=False):
+        logger.info(f"Routing ({routing_key}) task {task is None}")
         try:
             super().publish(routing_key, task, document, retry)
         except pika.exceptions.UnroutableError:
