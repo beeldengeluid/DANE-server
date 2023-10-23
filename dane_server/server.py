@@ -52,7 +52,8 @@ def main():
     logger.addHandler(ch)
 
     messageQueue = RabbitMQListener(cfg)
-    # handler = Handler(config=cfg, queue=messageQueue)
+    msg_queue_handler = Handler(config=cfg, queue=messageQueue)
+    logger.info(f"Assigned rmq listener callback: {msg_queue_handler is not None}")
     logger.info("Connected to ElasticSearch")
     logger.info("Connecting to RabbitMQ")
 
